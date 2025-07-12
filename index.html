@@ -1,18 +1,26 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <title>24h Job Alerts</title>
+  <style>
+    body { font-family: sans-serif; padding: 1rem; }
+    input, select, button { font-size: 1rem; margin: 0.25rem 0; padding: 0.5rem; width: 100%; max-width: 300px; box-sizing: border-box; }
+    table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
+    th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: left; }
+    th { background: #f4f4f4; }
+  </style>
 </head>
 <body>
   <h1>24h Job Alerts</h1>
   <form id="profile-form">
-    <input name="email"    type="email"    placeholder="you@domain.com" required><br>
-    <input name="title"     placeholder="e.g. Technical PM"    required><br>
-    <input name="location"  placeholder="City or ZIP"         required><br>
+    <input name="email"    type="email"    placeholder="you@domain.com" required>
+    <input name="title"     placeholder="e.g. Technical PM"    required>
+    <input name="location"  placeholder="City or ZIP"         required>
 
     <!-- NEW: search radius in miles -->
-    <input name="radius" type="number" min="0" placeholder="Radius (miles)"><br>
+    <input name="radius" type="number" min="0" placeholder="Radius (miles)" value="0">
 
     <!-- NEW: how far back to look -->
     <label for="days_old">Search Window:</label>
@@ -20,7 +28,7 @@
       <option value="1">Last 24 hours</option>
       <option value="2">Last 2 days</option>
       <option value="7">Last 7 days</option>
-    </select><br>
+    </select>
 
     <button type="submit">Start Alerts</button>
   </form>
