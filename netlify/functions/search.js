@@ -11,11 +11,18 @@ exports.handler = async ({ body }) => {
     + `&max_days_old=1`
   );
   const { results } = await resp.json();
+
   const jobs = results.map(r => ({
-    title:   r.title,
-    company: r.company.display_name,
-    url:     r.redirect_url
+    title:         r.title,
+    company:       r.company.display_name,
+    description:   r.description,        // short snippet
+    salary_min:    r.salary_min,         // number or null
+    salary_max:    r.salary_max,         // number or null
+    salary_pred:   r.salary_is_predicted, // 0 or 1
+    date_posted:   r.created,            // ISO timestamp
+    url:           r.redirect_url
   }));
+
   return {
     statusCode: 200,
     body:       JSON.stringify(jobs)
