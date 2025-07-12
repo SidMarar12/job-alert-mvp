@@ -1,72 +1,54 @@
 // app.js
-document.getElementById('profile-form').addEventListener('submit', async function(e) {
+const form       = document.getElementById('profile-form');
+const resultsDiv = document.getElementById('results');
+
+form.addEventListener('submit', async e => {
   e.preventDefault();
-  const form = e.target;
-  const email     = form.email.value.trim();
-  const title     = form.title.value.trim();
-  const location  = form.location.value.trim();
-  const radius    = form.radius.value.trim() || '0';
-  const days_old  = form.days_old.value;
 
-  // send your new params to the Netlify function
-  const res = await fetch('/.netlify/functions/search', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, title, location, radius, days_old })
-  });
-  const data = await res.json();
+  // pull ALL named inputs out of the form
+  const { title, location, radius = 0, days_old = 1 } =
+    Object.fromEntries(new FormData(form).entries());
 
-  const resultsDiv = document.getElementById('results');
-  resultsDiv.innerHTML = '';
+  // show a quick loading state
+  resultsDiv.innerHTML = `<p>Loading jobs…</p>`;
 
-  if (!data.results || data.results.length === 0) {
-    resultsDiv.textContent = 'No jobs found.';
-    return;
-  }
+  try {
+    const res = await fetch('/.netlify/functions/search', {
+      method:  'POST',
+      headers: { 'Content-Type':'application/json' },
+      body:    JSON.stringify({ title, location, radius, days_old })
+    });
 
-  // build table
-  const table = document.createElement('table');
-  const thead = document.createElement('thead');
-  thead.innerHTML = `
-    <tr>
-      <th>Title & Company</th>
-      <th>Description</th>
-      <th>Salary</th>
-      <th>Contract</th>
-      <th>Location</th>
-      <th>Date Posted</th>
-    </tr>`;
-  table.appendChild(thead);
+    if (!res.ok) throw new Error(`Function error: ${res.status}`);
 
-  const tbody = document.createElement('tbody');
-  data.results.forEach(job => {
-    const tr = document.createElement('tr');
-    const desc = job.description && job.description.length > 200
-      ? job.description.substr(0, 200) + '…'
-      : job.description || '';
-    const salary = job.salary_min && job.salary_max
-      ? `$${job.salary_min.toLocaleString()} – $${job.salary_max.toLocaleString()}`
-      : '—';
-    const contract = job.contract_type || '—';
-    const loc = job.location?.display_name || '—';
-    const date = job.created
-      ? new Date(job.created).toLocaleDateString()
-      : '—';
+    const jobs = await res.json();
 
-    tr.innerHTML = `
-      <td>
-        <a href="${job.redirect_url}" target="_blank">${job.title}</a><br>
-        <small>${job.company.display_name}</small>
-      </td>
-      <td>${desc}</td>
-      <td>${salary}</td>
-      <td>${contract}</td>
-      <td>${loc}</td>
-      <td>${date}</td>
+    if (jobs.length === 0) {
+      resultsDiv.innerHTML = `<p>No jobs found.</p>`;
+      return;
+    }
+
+    // render a simple table of results
+    const rows = jobs.map(j => `
+      <tr>
+        <td><a href="${j.url}" target="_blank">${j.title}</a><br><small>${j.company}</small></td>
+        <td>${j.date_posted.slice(0,10)}</td>
+        <td>$${j.salary_min?.toLocaleString()} – $${j.salary_max?.toLocaleString()}</td>
+      </tr>
+    `).join('');
+
+    resultsDiv.innerHTML = `
+      <table border="1" cellpadding="6" cellspacing="0" style="width:100%;border-collapse:collapse">
+        <thead><tr>
+          <th>Title &amp; Company</th>
+          <th>Date Posted</th>
+          <th>Salary</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
     `;
-    tbody.appendChild(tr);
-  });
-  table.appendChild(tbody);
-  resultsDiv.appendChild(table);
+  } catch(err) {
+    resultsDiv.innerHTML = `<p style="color:red">Error: ${err.message}</p>`;
+  }
 });
 
