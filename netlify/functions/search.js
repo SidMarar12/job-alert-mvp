@@ -9,11 +9,12 @@ exports.handler = async ({ body }) => {
     + `&app_key=${process.env.ADZUNA_APP_KEY}`
     + `&what=${encodeURIComponent(title)}`
     + `&where=${encodeURIComponent(location)}`
-    + `&max_days_old=${days_old}`;      // ← dynamic window
+    + `&max_days_old=${days_old}`;
 
-  // if radius was supplied, convert to km and append
-  if (radius) {
-    const km = (radius * 1.609).toFixed(1);
+  // only include distance if the user entered a positive radius
+  const miles = Number(radius) || 0;
+  if (miles > 0) {
+    const km = (miles * 1.609).toFixed(1);
     url += `&distance=${km}`;
   }
 
