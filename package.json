@@ -1,0 +1,24 @@
+{
+  "name": "job-alert-mvp",
+  "version": "1.0.0",
+  "description": "MVP for 24h job alerts",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SidMarar12/job-alert-mvp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/SidMarar12/job-alert-mvp/issues"
+  },
+  "homepage": "https://github.com/SidMarar12/job-alert-mvp#readme",
+  "dependencies": {
+    "node-fetch": "^2.7.0"
+  }
+}
