@@ -1,3 +1,4 @@
+// netlify/functions/search.js
 const fetch = require('node-fetch');
 
 exports.handler = async ({ body }) => {
@@ -18,22 +19,24 @@ exports.handler = async ({ body }) => {
     url += `&distance=${km}`;
   }
 
+  // fetch from Adzuna
   const response = await fetch(url);
   const data     = await response.json();
   const results  = data.results || [];
 
-  // map to the fields you already render
+  // map to the fields you render in app.js
   const jobs = results.map(r => ({
     title:         r.title,
-    company:       r.company.display_name,
-    description:   r.description,
-    salary_min:    r.salary_min,
-    salary_max:    r.salary_max,
-    salary_pred:   r.salary_is_predicted,
-    contract_type: r.contract_type || '—',
-    contract_time: r.contract_time || '—',
-    date_posted:   r.created,
-    url:           r.redirect_url
+    company:       r.company?.display_name || '—',
+    location:      r.location?.display_name   || '—',
+    description:   r.description               || '',
+    salary_min:    r.salary_min                || 0,
+    salary_max:    r.salary_max                || 0,
+    salary_pred:   r.salary_is_predicted       || false,
+    contract_type: r.contract_type             || '—',
+    contract_time: r.contract_time             || '—',
+    date_posted:   r.created                   || '',
+    url:           r.redirect_url              || ''
   }));
 
   return {
