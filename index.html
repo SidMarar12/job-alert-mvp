@@ -7,11 +7,24 @@
 <body>
   <h1>24h Job Alerts</h1>
   <form id="profile-form">
-    <input name="email"     type="email"    placeholder="you@domain.com" required><br>
+    <input name="email"    type="email"    placeholder="you@domain.com" required><br>
     <input name="title"     placeholder="e.g. Technical PM"    required><br>
     <input name="location"  placeholder="City or ZIP"         required><br>
-    <button>Start Alerts</button>
+
+    <!-- NEW: search radius in miles -->
+    <input name="radius" type="number" min="0" placeholder="Radius (miles)"><br>
+
+    <!-- NEW: how far back to look -->
+    <label for="days_old">Search Window:</label>
+    <select name="days_old" id="days_old">
+      <option value="1">Last 24 hours</option>
+      <option value="2">Last 2 days</option>
+      <option value="7">Last 7 days</option>
+    </select><br>
+
+    <button type="submit">Start Alerts</button>
   </form>
+
   <div id="results"></div>
   <script src="app.js"></script>
 </body>
