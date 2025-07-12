@@ -1,35 +1,76 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <title>24h Job Alerts</title>
   <style>
-    body { font-family: sans-serif; padding: 1rem; }
-    input, select, button { font-size: 1rem; margin: 0.25rem 0; padding: 0.5rem; width: 100%; max-width: 300px; box-sizing: border-box; }
-    table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
-    th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: left; }
-    th { background: #f4f4f4; }
+    /* --- Page setup --- */
+    body {
+      font-family: system-ui, sans-serif;
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      line-height: 1.4;
+    }
+    h1 {
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+    }
+
+    /* --- Grid layout for the form --- */
+    #profile-form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)) auto;
+      gap: 0.75rem;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    #profile-form input,
+    #profile-form select {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 0.95rem;
+    }
+
+    /* label + select cell */
+    #profile-form .label-inline {
+      white-space: nowrap;
+      margin-right: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    /* Big full-width button */
+    #profile-form button {
+      grid-column: 1 / -1;
+      padding: 0.75rem;
+      background: #0072ce;
+      color: #fff;
+      font-size: 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    #profile-form button:hover {
+      background: #005bb5;
+    }
   </style>
 </head>
 <body>
   <h1>24h Job Alerts</h1>
   <form id="profile-form">
-    <input name="email"    type="email"    placeholder="you@domain.com" required>
+    <input name="email"     type="email"    placeholder="you@domain.com" required>
     <input name="title"     placeholder="e.g. Technical PM"    required>
     <input name="location"  placeholder="City or ZIP"         required>
-
-    <!-- NEW: search radius in miles -->
-    <input name="radius" type="number" min="0" placeholder="Radius (miles)" value="0">
-
-    <!-- NEW: how far back to look -->
-    <label for="days_old">Search Window:</label>
+    <input name="radius"    type="number" min="0" placeholder="Radius (mi)">
+    <span class="label-inline">Search Window:</span>
     <select name="days_old" id="days_old">
       <option value="1">Last 24 hours</option>
       <option value="2">Last 2 days</option>
       <option value="7">Last 7 days</option>
     </select>
-
     <button type="submit">Start Alerts</button>
   </form>
 
