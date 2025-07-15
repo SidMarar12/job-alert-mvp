@@ -1,12 +1,10 @@
+# ──────────────────────────────────────────
 # netlify.toml
-[build]
-  # install, compile TS to /dist, then copy your index.html into /dist
-  command   = "npm ci && npm run build && cp index.html dist/"
-  publish   = "dist"
+# ──────────────────────────────────────────
 
-# ensure client‐side routing (if you ever add it)
-[[redirects]]
-  from     = "/*"
-  to       = "/index.html"
-  status   = 200
+[build]
+  # install + build
+  command   = "npm install && npm run build && cp index.html dist/"
+  publish   = "dist"
+  functions = "functions"
 
