@@ -1,15 +1,20 @@
 {
   "compilerOptions": {
-    "target":       "es2018",
-    "module":       "esnext",
-    "outDir":       "dist",
-    "strict":       true,
-    "esModuleInterop":           true,
+    "target": "es2018",
+    "module": "esnext",
+    "outDir": "dist",
+    "strict": true,
+    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "skipLibCheck":             true,
-    "moduleResolution":         "node"
+    "skipLibCheck": true,
+    "moduleResolution": "node"
   },
-  "include": ["src/**/*.ts"],        // only compile your src files
-  "exclude": ["node_modules", "src/__tests__"]  // ignore your tests
+  "include": [
+    "src/**/*.ts"        // only compile your src files
+  ],
+  "exclude": [
+    "node_modules",
+    "src/__tests__"      // ignore your tests
+  ]
 }
 
