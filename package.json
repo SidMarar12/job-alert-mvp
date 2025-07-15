@@ -4,7 +4,8 @@
   "description": "MVP for 24h job alerts",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -20,5 +21,17 @@
   "homepage": "https://github.com/SidMarar12/job-alert-mvp#readme",
   "dependencies": {
     "node-fetch": "^2.7.0"
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/jest": "^30.0.0",
+    "@types/node-fetch": "^2.6.1",
+    "jest": "^30.0.4",
+    "jest-environment-jsdom": "^30.0.0",
+    "ts-jest": "^29.4.0",
+    "typescript": "^5.8.3"
   }
 }
+
