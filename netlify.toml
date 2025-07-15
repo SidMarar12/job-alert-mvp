@@ -1,8 +1,11 @@
-[build]
-  publish   = "."                      # serve static files from the project root
-  functions = "netlify/functions"
+# netlify.toml
 
-[dev]
+[build]
+  command   = "npm run build"
   publish   = "."
   functions = "netlify/functions"
+
+[build.environment]
+  # pin a Node version if you like
+  NODE_VERSION = "16"
 
