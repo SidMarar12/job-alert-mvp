@@ -1,11 +1,12 @@
 # netlify.toml
-
 [build]
-  command   = "npm run build"
-  publish   = "."
-  functions = "netlify/functions"
+  # install, compile TS to /dist, then copy your index.html into /dist
+  command   = "npm ci && npm run build && cp index.html dist/"
+  publish   = "dist"
 
-[build.environment]
-  # pin a Node version if you like
-  NODE_VERSION = "16"
+# ensure client‐side routing (if you ever add it)
+[[redirects]]
+  from     = "/*"
+  to       = "/index.html"
+  status   = 200
 

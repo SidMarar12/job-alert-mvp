@@ -1,3 +1,4 @@
+tee index.html << 'EOF'
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +17,6 @@
       font-size: 1.75rem;
       margin-bottom: 1rem;
     }
-
     /* --- Grid layout for the form --- */
     #profile-form {
       display: grid;
@@ -33,15 +33,11 @@
       border-radius: 4px;
       font-size: 0.95rem;
     }
-
-    /* label + select cell */
     #profile-form .label-inline {
       white-space: nowrap;
       margin-right: 0.5rem;
       font-size: 0.95rem;
     }
-
-    /* Big full-width button */
     #profile-form button {
       grid-column: 1 / -1;
       padding: 0.75rem;
@@ -56,11 +52,14 @@
     #profile-form button:hover {
       background: #005bb5;
     }
+    /* zebra striping */
+    table tbody tr:nth-child(odd) { background: #f9f9f9; }
+    table tbody tr:hover { background: #eef; }
   </style>
 </head>
 <body>
   <h1>24h Job Alerts</h1>
-  <form id="profile-form">
+  <form id="profile-form" data-testid="profile-form">
     <input name="email"     type="email"    placeholder="you@domain.com" required>
     <input name="title"     placeholder="e.g. Technical PM"    required>
     <input name="location"  placeholder="City or ZIP"         required>
@@ -78,4 +77,5 @@
   <script src="app.js"></script>
 </body>
 </html>
+EOF
 
